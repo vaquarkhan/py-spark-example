@@ -41,8 +41,8 @@ from awsglue.context import GlueContext
 ## -- 전역변수
 ## --------------------------------------------
 
-src_table_name = "sourceDF"
-tablenameInDb = 'log_ga_ods'
+src_table_name = ""
+tablenameInDb = ''
 batchsize = 3000
 partitionsize = 32
 
@@ -51,7 +51,7 @@ partitionsize = 32
 ## --------------------------------------------
 client = boto3.client("secretsmanager", region_name="ap-northeast-2")
 
-secret_name = "arn:aws:secretsmanager:ap-northeast-2:020709675181㊙️prod/apdata-cdp-aurmy/mysql-2doNIy"
+secret_name = ""
 
 get_secret_value_response = client.get_secret_value(
         SecretId=secret_name
@@ -73,48 +73,7 @@ print(db_url)
 ## -- 사용자 정의 SQL
 ## --------------------------------------------
 
-use_sql="""SELECT
-    log_seq
-    ,log_dttm
-    ,site_id
-    ,site_nm
-    ,google_cid
-    ,adid
-    ,incs_no
-    ,site_mbr_id
-    ,incs_yn
-    ,login_yn
-    ,login_tp_vl
-    ,age
-    ,yrbr
-    ,sex_cd
-    ,cust_grd_nm
-    ,emp_yn
-    ,dvce_tp_cd
-    ,pg_url
-    ,pg_url_cd20
-    ,pg_ttl
-    ,pg_nm
-    ,pg_loc_vl
-    ,pg_tp_cd
-    ,pg_hit_sn
-    ,pg_cntr_cd
-    ,pg_lang_cd
-    ,infl_refrer
-    ,bounc_yn
-    ,log_tp_vl
-    ,evnt_cat
-    ,evnt_actn
-    ,evnt_label
-    ,prd_actn_tp
-    ,chkout_stp
-    ,chkout_optn_vl
-    ,pal
-    ,ord_no
-    ,sr_rslt_list
-    ,prd_info
-    FROM cdpods.log_ga_ods
-    WHERE partitionkey = '2021-10-21'
+use_sql="""
 
 """.strip('\n').replace('\n','')
 
@@ -124,8 +83,8 @@ use_sql="""SELECT
 
 
 sourceDF = spark.sql(use_sql)
-sourceDF = (sourceDF.withColumn("prd_info", F.concat_ws(",",F.col("prd_info")))
-                   .withColumn("sr_rslt_list", F.concat_ws(",",F.col("sr_rslt_list")))
+sourceDF = (sourceDF.withColumn("", F.concat_ws(",",F.col("")))
+                   .withColumn("", F.concat_ws(",",F.col("")))
                    )
 
 
