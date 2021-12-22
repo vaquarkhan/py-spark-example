@@ -30,7 +30,7 @@ job.init(args['JOB_NAME'], args)
 ## --------------------------------------------
 client = boto3.client("secretsmanager", region_name="ap-northeast-2")
 
-secret_name = "arn:aws:secretsmanager:ap-northeast-2:020709675181㊙️prod/apdata-cdp-aurmy/mysql-2doNIy"
+secret_name = ""
 
 get_secret_value_response = client.get_secret_value(
         SecretId=secret_name
@@ -44,12 +44,12 @@ secret = json.loads(secret)
 ## -- 전역변수
 ## --------------------------------------------
 
-src_db_schema = 'cdpprd'
-src_table_name = 'f_sal_prd_hist_dev_temp'
+src_db_schema = ''
+src_table_name = ''
 partitionsCount = 72
 fetchsize = 5000
-partition_column = 'stnd_ymd'
-partition_column_toglue = 'stnd_ymd_partition'
+partition_column = ''
+partition_column_toglue = ''
 logger = glueContext.get_logger()
 
 
@@ -74,9 +74,9 @@ def getSql():
 db_url = 'jdbc:mysql://' + secret['host'] + ':3368/' + secret['dbname'] + '?characterEncoding=utf8&rewriteBatchedStatements=true'
 db_username = secret['username']
 db_password = secret['password']
-bucket_name = 'bdp-apne2-prd-tmp'
+bucket_name = ''
 sub_folder_name = '/glue-rds-output-buck/'
-s3_output_full = 's3://'%20%2B%20bucket_name%20%2B%20sub_folder_name%20%2B%20src_table_name%20%2B%20'/'
+s3_output_full = ''
 
 
 ## --------------------------------------------
@@ -152,29 +152,7 @@ datasource0 = DynamicFrame.fromDF(df2, glueContext, "datasource0")
 ## -- Defining mapping for the transformation
 ## --------------------------------------------
 applymapping1 = ApplyMapping.apply(frame = datasource0, mappings = [
-    ("prd_sal_srno","VARCHAR","prd_sal_srno","VARCHAR"),
-    ("prd_sal_stlm_dttm","TIMESTAMP","prd_sal_stlm_dttm","TIMESTAMP"),
-    ("sal_st_cd","VARCHAR","sal_st_cd","VARCHAR"),
-    ("sal_srno","VARCHAR","sal_srno","VARCHAR"),
-    ("sal_stlm_dt","VARCHAR","sal_stlm_dt","VARCHAR"),
-    ("prd_sn","INTEGER","prd_sn","INTEGER"),
-    ("chn_cd","VARCHAR","chn_cd","VARCHAR"),
-    ("prtn_id","VARCHAR","prtn_id","VARCHAR"),
-    ("pos_no","VARCHAR","pos_no","VARCHAR"),
-    ("rct_no","VARCHAR","rct_no","VARCHAR"),
-    ("chcs_no","VARCHAR","chcs_no","VARCHAR"),
-    ("incs_no","VARCHAR","incs_no","VARCHAR"),
-    ("incs_yn","VARCHAR","incs_yn","VARCHAR"),
-    ("nmbr_yn","VARCHAR","nmbr_yn","VARCHAR"),
-    ("chn_prd_cd","VARCHAR","chn_prd_cd","VARCHAR"),
-    ("prd_cd","VARCHAR","prd_cd","VARCHAR"),
-    ("sal_utpr","INTEGER","sal_utpr","INTEGER"),
-    ("sal_qty","INTEGER","sal_qty","INTEGER"),
-    ("prd_sal_amt","decimal(13,3)","prd_sal_amt","decimal(13,3)"),
-    ("prd_dc_amt","decimal(13,3)","prd_dc_amt","decimal(13,3)"),
-    ("stnd_ymd","DATE","stnd_ymd","DATE"),
-    ("stnd_ymd_partition","VARCHAR","stnd_ymd_partition","VARCHAR"),
-    ("sys_cl_cd","VARCHAR","sys_cl_cd","VARCHAR")
+
 ], transformation_ctx = "applymapping1")
 resolvechoice2 = ResolveChoice.apply(frame = applymapping1, choice = "make_struct", transformation_ctx = "resolvechoice2")
 dropnullfields3 = DropNullFields.apply(frame = resolvechoice2, transformation_ctx = "dropnullfields3")
