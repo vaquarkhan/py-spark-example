@@ -1,0 +1,25 @@
+in:
+  type: bigquery
+  project: 'freud-int-200423'
+  keyfile: '/home/freud/superkey.json'
+  sql: 'SELECT x,y FROM iot_table.iot_data_geo where 1=1'
+  columns:
+    - {name: x, type: string}
+    - {name: y, type: string}
+
+  # # If your data is in a location other than the US or EU multi-region, you must specify the location.
+  # location: asia-northeast1
+out:
+        type: bigquery
+        mode: append
+        auth_method: compute_engine
+        service_accoumt_email: dataflow-yun@freud-int-200423.iam.gserviceaccount.com
+        project: freud-int-200423
+        dataset: neogames
+        table: embulk_test2
+        auto_create_table: true
+        gcs_bucket: freud-int-200423
+        auto_create_gcs_bucket: true
+        ignore_unknown_values: true
+        allow_quoted_newlines: true
+        auto_create_dataset: true

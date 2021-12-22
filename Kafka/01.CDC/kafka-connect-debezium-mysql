@@ -1,0 +1,47 @@
+curl -i -X POST -H "Accept:application/json" \
+    -H "Content-Type:application/json" http://34.64.145.134:8083/connectors/ \
+    -d '{
+        "name" : "mysql-connector",
+        "config" : {
+            "connector.class": "io.debezium.connector.mysql.MySqlConnector",
+            "database.hostname" : "34.64.239.239",
+            "database.port" : "3306",
+            "database.user" : "root",
+            "database.password" : "1234",
+            "database.server.id" : "2334963824",
+            "database.server.name" : "demo",
+            "database.history.kafka.bootstrap.servers" : "34.64.145.134:9092",
+            "database.history.kafka.topic" : "ddl-test",
+            "include.schema.changes" : "true",
+            "database.serverTimezone" : "Asia/Seoul"
+        }
+    }'
+
+
+
+
+curl -i -X POST -H "Accept:application/json" \
+    -H "Content-Type:application/json" http://34.64.77.61:8083/connectors/ \
+    -d '{
+	    "name": "sqlserver-connector", 
+	    "config": { 
+            "connector.class": "io.debezium.connector.sqlserver.SqlServerConnector", 
+            "tasks.max": "1", 
+            "database.hostname": "34.64.231.216", 
+            "database.port": "4321", 
+            "database.user": "root", 
+            "database.password": "1234", 
+            "database.server.name ":"database_server_name ", 
+            "database.history.kafka.bootstrap.servers ":"34.64.77.61:9092",
+            "database.history.kafka.topic": "cdc2", 
+            "transforms": "unwrap", 
+            "transforms.unwrap.type": "io.debezium.transforms.UnwrapFromEnvelope",
+            "transforms.unwrap.drop.tombstones": "false", 
+            "transforms.unwrap.operation.header": "true", 
+            "key.converter": "org.apache.kafka.connect.json.JsonConverter", 
+            "key.converter.schemas.enable ":"false ", 
+            "value.converter ":"org.apache.kafka.connect.json.JsonConverter ", 
+            "value.converter.schemas.enable ":"false ", 
+            "include.schema .changes ":"false " 
+            } 
+        }'
